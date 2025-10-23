@@ -1,6 +1,6 @@
 from pathlib import Path
 
-def cd(path_of_curr_dir: Path, arguments: list) -> Path|bool:
+def cd(path_of_curr_dir: Path, arguments: list) -> Path|None:
     """
     Осуществляет выполнение команды cd
     :param path_of_curr_dir: путь к текущему каталогу
@@ -17,11 +17,11 @@ def cd(path_of_curr_dir: Path, arguments: list) -> Path|bool:
 
     if not new_path.exists():
         print(f"cd: {arguments[0]} no such file or directory")
-        return False
+        return None
 
     if not new_path.is_dir():
         print(f"cd:{arguments[0]} not a directory")
-        return False
+        return None
 
     return new_path
 
