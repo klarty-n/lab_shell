@@ -1,20 +1,12 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
-
+from src.mini_shell import mini_shell
 
 def main() -> None:
     """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
+    Точка входа программы
+    :return: ничего не возвращает
     """
-
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
-
-    result = power_function(target=target, power=degree)
-
-    print(result)
-
-    print(SAMPLE_CONSTANT)
+    shell = mini_shell()
+    shell.run()
 
 if __name__ == "__main__":
     main()
