@@ -83,38 +83,6 @@ def undo_mv(path_of_curr_dir: Path, parsed: list) -> bool:
 
     return all_removed
 
-def undo_rm(path_of_curr_dir: Path, parsed: list) -> bool:
-    """
-    Отменяет команду rm
-    :param path_of_curr_dir:  путь к текущему каталогу
-    :param parsed: Запаршеная строка
-    :return: True / False в зависимости от успеха выполнения
-    """
-    if len(parsed)<2:
-        error("undo: invalid rm command")
-        return False
-
-    files = parsed[1:]
-    trash_path = Path('.trash').resolve()
-
-    all_canceled = True
-    for file in files:
-        file_path = (path_of_curr_dir / file).resolve()
-
-        file_trash = trash_path / file_path.name
-
-        if file_trash.exists():
-            # Обратно перемещаем
-            shutil.move(file_trash, file_path)
-            print(f"undo: {file} unremoved")
-        else:
-            error(f"undo: {file} not found in .trash")
-            all_canceled = False
-
-    return all_canceled
-
-
-
 def undo(path_of_curr_dir: Path, arguments: list) -> bool:
     """
     Осуществляет выполнение команды grep / поиск строк, соответсвующих шаблону
