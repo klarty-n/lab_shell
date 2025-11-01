@@ -70,6 +70,3 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
             return False
 
     return all_elements_removed
-
-path = Path('/home/daria_nov/cp_test')
-print(rm(path, ['5']))
