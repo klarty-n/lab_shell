@@ -2,3 +2,8 @@ cd ../
 cd ../
 cd cp_test
 cp 3 2
+cd ../
+ls -l
+cd lab_shell
+cd src
+cat main.py logger.py
