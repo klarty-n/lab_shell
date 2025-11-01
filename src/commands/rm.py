@@ -56,16 +56,13 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
             continue
 
         try:
-            print("ppp")
             if element.is_dir():
-                print("ppp")
                 if not recursive:
                     error(f"rm: cannot remove '{element.name}': Is a directory")
                     all_elements_removed = False
                     continue
 
                 else:
-                    print("p[p[p[")
                     # При удалении каталога просим подтверждение
                     confirmation = input(f"Remove directory '{element.name}' and all contents? (y/n): ").lower()
                     if confirmation != "y":
