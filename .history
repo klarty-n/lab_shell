@@ -1,9 +1,9 @@
 cd ../
 cd ../
 cd cp_test
-cp 3 2
+rm 00.txt
 cd ../
-ls -l
-cd lab_shell
-cd src
-cat main.py logger.py
+cd ../
+cd cp_test
+tm i.txt
+rm i.txt

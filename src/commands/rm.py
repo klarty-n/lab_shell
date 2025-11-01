@@ -1,7 +1,16 @@
 import shutil
 from pathlib import Path
-import os
 from src.errors import error
+
+def add_trash(element: Path):
+    """
+    Перемещаем в trash файл или каталог
+    :param element: путь к файлу/каталогу
+    """
+    trash_path = Path('src/commands/.trash').resolve()
+    target = trash_path / element.name
+
+    shutil.move(element, target)
 
 def rm(path_of_curr_dir: Path, arguments: list) -> bool:
     """
@@ -33,11 +42,13 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
 
     # Проходимся по каждому введенному файлу/каталогу
     for element in deleting_element_path:
+        print(element)
         # Если такого не существует, выводим ошибку и переходим к следующему
         if not element.exists():
+            print("ok")
             error(f"rm: cannot remove {element.name}: No such file or directory")
             all_elements_removed = False
-            deleting_element_path = deleting_element_path[1:]
+            continue
 
         # Вывод ошибки, при попытке удалить родительский каталог или корневой
         if element == Path("/").resolve() or str(element)[-2:] == "..":
@@ -45,13 +56,16 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
             continue
 
         try:
+            print("ppp")
             if element.is_dir():
+                print("ppp")
                 if not recursive:
                     error(f"rm: cannot remove '{element.name}': Is a directory")
                     all_elements_removed = False
                     continue
 
                 else:
+                    print("p[p[p[")
                     # При удалении каталога просим подтверждение
                     confirmation = input(f"Remove directory '{element.name}' and all contents? (y/n): ").lower()
                     if confirmation != "y":
@@ -59,10 +73,10 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
                         all_elements_removed = False
                         continue
 
-                    shutil.rmtree(element)
+                    add_trash(element)
 
             else:
-                os.remove(element)
+                add_trash(element)
             return True
 
         except Exception as e:
