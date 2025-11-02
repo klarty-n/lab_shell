@@ -1,8 +1,11 @@
 import logging
+from pathlib import Path
+
+log_path = Path('src/commands/shell.log').resolve()
 
 logging.basicConfig(
     level=logging.INFO,
-    filename="shell.log",
+    filename=log_path,
     filemode="a",
     datefmt="%Y-%m-%d %H:%M:%S",
     format="[%(asctime)s] %(message)s",

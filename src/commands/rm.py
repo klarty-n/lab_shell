@@ -42,10 +42,8 @@ def rm(path_of_curr_dir: Path, arguments: list) -> bool:
 
     # Проходимся по каждому введенному файлу/каталогу
     for element in deleting_element_path:
-        print(element)
         # Если такого не существует, выводим ошибку и переходим к следующему
         if not element.exists():
-            print("ok")
             error(f"rm: cannot remove {element.name}: No such file or directory")
             all_elements_removed = False
             continue

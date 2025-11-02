@@ -1,9 +1,0 @@
-cd ../
-cd ../
-cd cp_test
-rm 00.txt
-cd ../
-cd ../
-cd cp_test
-tm i.txt
-rm i.txt

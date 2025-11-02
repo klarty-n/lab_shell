@@ -1,4 +1,7 @@
 from src.errors import error
+from pathlib import Path
+
+history_path = Path('src/commands/.history').resolve()
 
 def add_command(command: str):
     """
@@ -6,7 +9,7 @@ def add_command(command: str):
     :param command: введенная команда
     """
     try:
-        with open('.history', "r", encoding="utf-8") as f:
+        with open(history_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
             # Храним только 10 команд, первую команду удаляем, если команд стало больше 10
             if len(lines)>=10:
@@ -16,13 +19,13 @@ def add_command(command: str):
         error(f"history: mistake during unpacking file {e}")
         lines = []
 
-    # Перезаписываем файл, без первой команды
-    with open('.history', "w", encoding="utf-8") as f:
+    # Перезаписываем файл, без верхней команды
+    with open(history_path, "w", encoding="utf-8") as f:
         f.writelines(lines)
 
     # Записываем новую введенную команду
     try:
-        with open('.history', "a", encoding="utf-8") as f:
+        with open(history_path, "a", encoding="utf-8") as f:
             f.write(f"{command}\n")
     except Exception as e:
         error(f"can`t add command to .history: {e}")
@@ -33,6 +36,7 @@ def history(arguments: list) -> bool:
     :param arguments: аргументы введенные с командой
     :return: True или False
     """
+
     # Выводим 10 команд, если не указано сколько
     if not arguments:
         n = 10
@@ -47,7 +51,7 @@ def history(arguments: list) -> bool:
             return False
 
     try:
-        with open('.history', "r", encoding="utf-8") as f:
+        with open(history_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
             # Пустые строки не выводим
             lines = [line for line in lines if line.strip()]

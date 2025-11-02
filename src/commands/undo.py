@@ -122,6 +122,7 @@ def undo(path_of_curr_dir: Path, arguments: list) -> bool:
     :param arguments: аргументы введенные с командой
     :return: True или False, в зависимости от успеха выполнения
     """
+    history_path = Path('src/commands/.history').resolve()
 
     # Если введено что-то кроме undo, лишние аргументы
     if arguments:
@@ -131,9 +132,8 @@ def undo(path_of_curr_dir: Path, arguments: list) -> bool:
     try:
         # Считываем команды из истории
         try:
-            with open('.history', "r", encoding="utf-8") as f:
+            with open(history_path, "r", encoding="utf-8") as f:
                 lines = f.readlines()
-                print(lines)
         except Exception as e:
             error(f"undo: mistake during unpacking file {e}")
             return False
@@ -143,7 +143,6 @@ def undo(path_of_curr_dir: Path, arguments: list) -> bool:
             return False
 
         last_command = lines[-2].strip()
-        print(last_command)
 
         parsed = shlex.split(last_command)
 
@@ -173,7 +172,7 @@ def undo(path_of_curr_dir: Path, arguments: list) -> bool:
     new_lines = lines[:-1]
     # Перезаписываем историю без отмененной команды
     try:
-        with open('.history', "w", encoding="utf-8") as f:
+        with open(history_path, "w", encoding="utf-8") as f:
             f.writelines(new_lines)
     except Exception as e:
         error(f"undo: could not rewrite history: {e}")
